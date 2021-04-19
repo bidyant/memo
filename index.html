@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memo</title>
+    <link rel="stylesheet" href="./assets/bootstrap.css" />
+    <style>
+      body {
+        background-color: aliceblue;
+        margin: 0;
+        padding: 0;
+      }
+      #img {
+        width: 300px;
+        height: auto;
+      }
+      .auoth {
+        background-color: rgb(221, 221, 221);
+        padding: 10px;
+        margin-bottom: 5px;
+      }
+      #brand {
+        font-size: xx-large;
+        color: aliceblue;
+        text-decoration: none;
+        text-align: center;
+      }
+      .space {
+        margin: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="fluid-container">
+      <nav class="navbar navbar-expand-lg navbar-info bg-dark">
+        <div class="container-fluid d-flex justify-content-space-between">
+          <h4 id="brand">MemO</h4>
+          <img
+            src="/assets/memo.png"
+            class="align-self-center"
+            width="50"
+            height="40"
+          />
+        </div>
+      </nav>
+    </div>
+    <div class="auoth">
+      <h5>
+        <b>Title:<b id="mtile">Meme Title</b></b>
+      </h5>
+    </div>
+    <div class="container">
+      <center>
+        <img src="./assets/giphy.gif" id="img" alt="image" />
+      </center>
+    </div>
+    <hr />
+    <div class="fluid-continer p-2">
+      <div class="d-flex justify-content-evenly">
+        <a id="download" class="col-4 btn btn-danger space" download
+          >Download</a
+        >
+        <a
+          id="share"
+          data-action="share/whatsapp/share"
+          target="_blank"
+          class="col-4 btn btn-primary space"
+          >share</a
+        >
+        <a onclick="makerequest()" class="col-4 btn btn-success space"
+          >Next</a
+        >
+      </div>
+    </div>
+    <script>
+    function get_id(id)
+    {
+        return document.getElementById(id);
+    }
+      get_id("img").style.width =window.screen.width - 10 + "px";
+      get_id("img").style.height =window.screen.height - 185 + "px";
+      //get the content
+      function makerequest() {
+          get_id("img").setAttribute("src","./assets/giphy.gif");
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://meme-api.herokuapp.com/gimme", true);
+        xhr.setRequestHeader("content-type", "text/json");
+        xhr.onload = () => {
+          if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+              data = JSON.parse(xhr.response);
+              get_id("img").setAttribute("src", data.url);
+              get_id("mtile").innerText = data.title;
+              get_id("download").setAttribute("href", data.url);
+              get_id("share").setAttribute("href", "whatsapp://send?text=" + data.url);
+            }
+            else
+            {
+                window.location("https://bidyant.github.io/bidya-bedant-joshi/")
+            }
+          }
+        };
+        //sending http request
+        xhr.send();
+      }
+      makerequest();
+    </script>
+  </body>
+</html>
