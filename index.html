@@ -114,12 +114,10 @@
          function sendrequest() {
         const xml = new XMLHttpRequest();
         xml.open("GET", "http://gmuassignmentsubmission.great-site.net", true);
-        xml.setRequestHeader("content-type", "text/json");
         xml.onload = () => {
           if (xml.readyState === XMLHttpRequest.DONE) {
             if (xml.status === 200) {
-              file = JSON.parse(xhr.response);
-              alert(file);
+              alert(xhr.response);
             }
             else{
               alert("error occured");
